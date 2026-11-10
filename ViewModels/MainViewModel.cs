@@ -3,6 +3,8 @@ using DrugInspectionArchive.Dtos;
 using DrugInspectionArchive.Enums;
 using DrugInspectionArchive.Services;
 using System.Collections.ObjectModel;
+using DrugInspectionArchive.Core;
+
 
 namespace DrugInspectionArchive.ViewModels;
 
@@ -21,7 +23,8 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty] private CompanyArchiveSummary? selectedCompany;
     [ObservableProperty] private string query = string.Empty;
-    [ObservableProperty] private SearchMode mode = SearchMode.All;
+        [ObservableProperty] private SearchMode mode = AppSettings.DefaultMode;
+    [ObservableProperty] private BookSort sort = AppSettings.DefaultSort;
     [ObservableProperty] private bool isBusy;
     [ObservableProperty] private string resultsSummary = string.Empty;
     [ObservableProperty] private string archiveSummaryText = string.Empty;
@@ -45,6 +48,29 @@ public partial class MainViewModel : ObservableObject
             : Books.Count == 1 ? "كتاب واحد" : $"{Books.Count} كتاب";
 
     partial void OnIsBusyChanged(bool value) => RefreshState();
+
+        partial void OnSortChanged(BookSort value) => ApplySort();
+
+    // ترتيب الكتب المعروضة
+    private void ApplySort()
+    {
+        var numeric = StringComparer.Create(
+            System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.CompareOptions.NumericOrdering |
+            System.Globalization.CompareOptions.IgnoreCase);
+
+        var sorted = (Sort switch
+        {
+            BookSort.BookDate => Books.OrderByDescending(x => x.BookDate),
+            BookSort.BookNumber => Books.OrderBy(x => x.BookNumber ?? "", numeric),
+            _ => Books.OrderByDescending(x => x.AddedAtUtc)
+        }).ToList();
+
+        Books.Clear();
+
+        foreach (var book in sorted)
+            Books.Add(book);
+    }
 
     partial void OnResultsSummaryChanged(string value) => RefreshState();
 
@@ -144,10 +170,12 @@ public partial class MainViewModel : ObservableObject
 
             var books = await _searchService.GetBooksAsync(companyId, 300);
 
-            Books.Clear();
+                 Books.Clear();
 
             foreach (var book in books)
                 Books.Add(book);
+
+            ApplySort();
         }
         catch (Exception ex)
         {

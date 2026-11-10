@@ -1,0 +1,139 @@
+<Window x:Class="DrugInspectionArchive.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mi="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+        Title="عن البرنامج"
+        Width="560" Height="680"
+        MinWidth="480" MinHeight="520"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Style="{StaticResource AppWindowStyle}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="28,32,28,20">
+
+                <Border Width="76" Height="76" CornerRadius="20"
+                        Background="{StaticResource AccentBrush}"
+                        HorizontalAlignment="Center">
+                    <mi:MaterialIcon Kind="Archive" Width="40" Height="40"
+                                     Foreground="White"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"/>
+                </Border>
+
+                <TextBlock x:Name="NameText"
+                           Style="{StaticResource PageTitleText}"
+                           FontSize="21"
+                           HorizontalAlignment="Center"
+                           Margin="0,18,0,0"/>
+
+                <Border Background="{StaticResource AccentSoftBrush}"
+                        CornerRadius="12" Padding="12,4"
+                        HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <TextBlock x:Name="VersionText"
+                               Style="{StaticResource LatinText}"
+                               Foreground="{StaticResource AccentBrush}"
+                               FontSize="12.5" FontWeight="Medium"/>
+                </Border>
+
+                <TextBlock Text="أرشفة كتب فحص الأدوية والبحث السريع برقم التشغيلة، وكل بياناتك محفوظة محلياً على جهازك"
+                           TextWrapping="Wrap" TextAlignment="Center"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="12,16,12,0"/>
+
+                <Border Style="{StaticResource PanelBorder}" Padding="22,16" Margin="0,26,0,0">
+                    <StackPanel>
+                        <TextBlock Text="معلومات النظام"
+                                   Style="{StaticResource SectionTitleText}"/>
+                        <Grid Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/><RowDefinition/><RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="قاعدة البيانات" Style="{StaticResource CaptionText}" Margin="0,5"/>
+                            <TextBlock Grid.Column="1" Text="SQLite محلية" Margin="0,5"/>
+
+                            <TextBlock Grid.Row="1" Text="التعرف على النص" Style="{StaticResource CaptionText}" Margin="0,5"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="Tesseract OCR" Style="{StaticResource LatinText}" Margin="0,5"/>
+
+                            <TextBlock Grid.Row="2" Text="مجلد البيانات" Style="{StaticResource CaptionText}" Margin="0,5"/>
+                            <TextBlock x:Name="PathText" Grid.Row="2" Grid.Column="1"
+                                       Style="{StaticResource LatinText}"
+                                       TextWrapping="Wrap" Margin="0,5"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Text="سجل الإصدارات"
+                           Style="{StaticResource SectionTitleText}"
+                           Margin="4,26,0,10"/>
+
+                <ItemsControl x:Name="ReleasesList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource PanelBorder}"
+                                    Padding="20,16" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Background="{StaticResource AccentSoftBrush}"
+                                                CornerRadius="10" Padding="10,2">
+                                            <TextBlock Text="{Binding Version}"
+                                                       Style="{StaticResource LatinText}"
+                                                       Foreground="{StaticResource AccentBrush}"
+                                                       FontWeight="SemiBold" FontSize="12.5"/>
+                                        </Border>
+                                        <TextBlock Text="{Binding Date}"
+                                                   Style="{StaticResource LatinText}"
+                                                   Foreground="{StaticResource TextMutedBrush}"
+                                                   FontSize="12" Margin="12,0,0,0"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <ItemsControl ItemsSource="{Binding Items}" Margin="0,10,0,0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,3">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Width="5" Height="5" CornerRadius="3"
+                                                            Background="{StaticResource BorderStrongBrush}"
+                                                            VerticalAlignment="Top" Margin="0,8,10,0"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding}"
+                                                               TextWrapping="Wrap"
+                                                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="1"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderSubtleBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="24,14">
+            <Button Style="{StaticResource SecondaryButton}"
+                    Content="إغلاق" MinWidth="96"
+                    HorizontalAlignment="Left"
+                    Click="Close_Click"/>
+        </Border>
+    </Grid>
+</Window>

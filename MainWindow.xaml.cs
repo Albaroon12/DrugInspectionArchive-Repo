@@ -1,4 +1,5 @@
-﻿using DrugInspectionArchive.Dtos;
+﻿using DrugInspectionArchive.Core;
+using DrugInspectionArchive.Dtos;
 using DrugInspectionArchive.Enums;
 using DrugInspectionArchive.Services;
 using DrugInspectionArchive.ViewModels;
@@ -13,7 +14,6 @@ namespace DrugInspectionArchive;
 public partial class MainWindow : Window
 {
     private readonly ArchiveStorageService _storage = new();
-    private readonly InspectionBookService _bookService = new();
 
     private MainViewModel ViewModel => (MainViewModel)DataContext;
 
@@ -23,10 +23,12 @@ public partial class MainWindow : Window
 
         DataContext = new MainViewModel();
 
+        VersionText.Text = "v" + AppInfo.Version;
+
         Loaded += MainWindow_Loaded;
     }
 
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+    private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -37,12 +39,24 @@ public partial class MainWindow : Window
         {
         }
 
+        SyncChips();
+
         await ViewModel.LoadAsync();
 
         SearchBox.Focus();
     }
 
-    // ===== شريط الأدوات =====
+    // تحديد الخيار الظاهر في أزرار نطاق البحث والترتيب
+    private void SyncChips()
+    {
+        foreach (var rb in ModeChips.Children.OfType<RadioButton>())
+            rb.IsChecked = (string?)rb.Tag == ViewModel.Mode.ToString();
+
+        foreach (var rb in SortChips.Children.OfType<RadioButton>())
+            rb.IsChecked = (string?)rb.Tag == ViewModel.Sort.ToString();
+    }
+
+    // ===== الشريط العلوي =====
 
     private async void AddCompany_Click(object sender, RoutedEventArgs e)
     {
@@ -61,6 +75,28 @@ public partial class MainWindow : Window
         SearchBox.Focus();
     }
 
+    private async void Trash_Click(object sender, RoutedEventArgs e)
+    {
+        new TrashWindow { Owner = this }.ShowDialog();
+
+        await ViewModel.LoadAsync();
+    }
+
+    private async void Settings_Click(object sender, RoutedEventArgs e)
+    {
+        new SettingsWindow { Owner = this }.ShowDialog();
+
+        ViewModel.Mode = AppSettings.DefaultMode;
+        ViewModel.Sort = AppSettings.DefaultSort;
+
+        SyncChips();
+
+        await ViewModel.LoadAsync();
+    }
+
+    private void About_Click(object sender, RoutedEventArgs e) =>
+        new AboutWindow { Owner = this }.ShowDialog();
+
     // ===== البحث (متوافق مع قارئ الباركود) =====
 
     private async void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -71,7 +107,6 @@ public partial class MainWindow : Window
 
             await ViewModel.SearchNowAsync();
 
-            // تحديد النص كله حتى يستبدله المسح التالي
             SearchBox.SelectAll();
         }
         else if (e.Key == Key.Escape)
@@ -97,6 +132,15 @@ public partial class MainWindow : Window
 
         SearchBox.Focus();
         SearchBox.SelectAll();
+    }
+
+    private void Sort_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is RadioButton { Tag: string tag } &&
+            Enum.TryParse(tag, out BookSort sort))
+        {
+            ViewModel.Sort = sort;
+        }
     }
 
     // أي كتابة (أو مسح باركود) خارج حقل نصي تذهب لحقل البحث
@@ -147,7 +191,7 @@ public partial class MainWindow : Window
         if ((sender as FrameworkElement)?.DataContext is not BookArchiveItem book)
             return;
 
-                bool confirmed = MessageDialog.Confirm(
+        bool confirmed = MessageDialog.Confirm(
             this,
             $"سيتم نقل كتاب رقم {book.BookNumberText} ({book.CompanyName}) إلى سلة المحذوفات.\n" +
             "يمكنك استعادته منها أو حذفه نهائياً",
@@ -202,7 +246,6 @@ public partial class MainWindow : Window
 
     // ===== مساعدات =====
 
-    // الصف الذي وقعت عليه النقرة (وليس الترويسة)
     private static DataGridRow? RowFrom(DataGrid grid, MouseButtonEventArgs e) =>
         ItemsControl.ContainerFromElement(
             grid, e.OriginalSource as DependencyObject) as DataGridRow;
@@ -226,12 +269,5 @@ public partial class MainWindow : Window
             MessageDialog.Show(
                 this, ex.Message, "تعذر فتح الملف", DialogKind.Error);
         }
-    }
-
-        private async void Trash_Click(object sender, RoutedEventArgs e)
-    {
-        new TrashWindow { Owner = this }.ShowDialog();
-
-        await ViewModel.LoadAsync();
     }
 }
