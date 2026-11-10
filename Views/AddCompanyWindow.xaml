@@ -1,0 +1,77 @@
+<Window x:Class="DrugInspectionArchive.Views.AddCompanyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mi="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+        Title="شركة جديدة"
+        Width="460"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="{StaticResource SurfaceBrush}"
+        Style="{StaticResource AppWindowStyle}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- المحتوى -->
+        <StackPanel Grid.Row="0" Margin="28,26,28,24">
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,22">
+                <Border Width="40" Height="40"
+                        CornerRadius="8"
+                        Background="{StaticResource AccentSoftBrush}">
+                    <mi:MaterialIcon Kind="DomainPlus"
+                                     Width="22" Height="22"
+                                     Foreground="{StaticResource AccentBrush}"/>
+                </Border>
+
+                <TextBlock Text="إضافة شركة جديدة"
+                           Style="{StaticResource PageTitleText}"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Margin="14,0,0,0"/>
+            </StackPanel>
+
+            <TextBlock Text="اسم الشركة" Style="{StaticResource FieldLabelText}"/>
+
+            <TextBox x:Name="CompanyNameTextBox"
+                     Style="{StaticResource LatinInputTextBox}"
+                     MaxLength="200"
+                     TextChanged="CompanyName_TextChanged"/>
+
+            <TextBlock x:Name="ErrorText"
+                       Visibility="Collapsed"
+                       Foreground="{StaticResource DangerBrush}"
+                       FontSize="12.5"
+                       TextWrapping="Wrap"
+                       Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- الشريط السفلي -->
+        <Border Grid.Row="1"
+                Background="{StaticResource SurfaceAltBrush}"
+                BorderBrush="{StaticResource BorderSubtleBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="28,14">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Style="{StaticResource SecondaryButton}"
+                        Content="إلغاء"
+                        MinWidth="84"
+                        IsCancel="True"
+                        Click="Cancel_Click"/>
+
+                <Button x:Name="SaveButton"
+                        Style="{StaticResource PrimaryButton}"
+                        Content="حفظ الشركة"
+                        MinWidth="110"
+                        Margin="10,0,0,0"
+                        IsDefault="True"
+                        Click="Save_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
