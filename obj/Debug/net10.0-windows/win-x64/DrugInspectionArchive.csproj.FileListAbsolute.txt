@@ -567,3 +567,4 @@ D:\Projects\WpfProjects\DrugInspectionArchive\obj\Debug\net10.0-windows\win-x64\
 D:\Projects\WpfProjects\DrugInspectionArchive\obj\Debug\net10.0-windows\win-x64\DIArchive.pdb
 D:\Projects\WpfProjects\DrugInspectionArchive\obj\Debug\net10.0-windows\win-x64\DrugInspectionArchive.genruntimeconfig.cache
 D:\Projects\WpfProjects\DrugInspectionArchive\obj\Debug\net10.0-windows\win-x64\ref\DIArchive.dll
+D:\Projects\WpfProjects\DrugInspectionArchive\obj\Debug\net10.0-windows\win-x64\DrugInspectionArchive.sourcelink.json

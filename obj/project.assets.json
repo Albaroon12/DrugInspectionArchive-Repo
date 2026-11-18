@@ -4704,9 +4704,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\WpfProjects\\DrugInspectionArchive\\DrugInspectionArchive.csproj",
+      "projectUniqueName": "d:\\Projects\\WpfProjects\\DrugInspectionArchive\\DrugInspectionArchive_kqnvllng_wpftmp.csproj",
       "projectName": "DIArchive",
-      "projectPath": "D:\\Projects\\WpfProjects\\DrugInspectionArchive\\DrugInspectionArchive.csproj",
+      "projectPath": "d:\\Projects\\WpfProjects\\DrugInspectionArchive\\DrugInspectionArchive_kqnvllng_wpftmp.csproj",
       "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
       "outputPath": "D:\\Projects\\WpfProjects\\DrugInspectionArchive\\obj\\",
       "projectStyle": "PackageReference",

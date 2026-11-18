@@ -51,7 +51,7 @@ namespace DrugInspectionArchive {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DIArchive;component/app.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DIArchive;V1.0.0.0;component/app.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\App.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

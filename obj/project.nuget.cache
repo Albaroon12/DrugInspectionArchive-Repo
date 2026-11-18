@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9lOkheeP+xQ=",
+  "dgSpecHash": "VktKz0RFF+o=",
   "success": true,
-  "projectFilePath": "D:\\Projects\\WpfProjects\\DrugInspectionArchive\\DrugInspectionArchive.csproj",
+  "projectFilePath": "d:\\Projects\\WpfProjects\\DrugInspectionArchive\\DrugInspectionArchive_kqnvllng_wpftmp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lenovo\\.nuget\\packages\\bblanchon.pdfium.linux\\152.0.7961\\bblanchon.pdfium.linux.152.0.7961.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\bblanchon.pdfium.macos\\152.0.7961\\bblanchon.pdfium.macos.152.0.7961.nupkg.sha512",

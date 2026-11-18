@@ -1,5 +1,5 @@
 ﻿DIArchive
-
+1.0.0.0
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_O
 D:\Projects\WpfProjects\DrugInspectionArchive\App.xaml
 15-1839594914
 3-1368349639
-82430914504
+84-1387361553
 2312052190724
 MainWindow.xaml;Themes\Theme.xaml;Views\AboutWindow.xaml;Views\AddBooksWindow.xaml;Views\AddCompanyWindow.xaml;Views\BookViewerWindow.xaml;Views\EditBookWindow.xaml;Views\MessageDialog.xaml;Views\PrintWindow.xaml;Views\ReviewBookWindow.xaml;Views\SettingsWindow.xaml;Views\ShareWindow.xaml;Views\TrashWindow.xaml;Views\WarehouseEditor.xaml;Views\WarehouseSetupWindow.xaml;
 
-False
+True
 
